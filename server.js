@@ -10,6 +10,20 @@ server.use(bodyParser.urlencoded({extended:true}));
 server.set('view engine','hbs'); //set server to use hbs as views engine
 hbs.registerPartials(__dirname + '/views/partials'); //directory code shared by all pages
 
+var weatherdata;
+
+//item is array of JSON object
+hbs.registerHelper('list', (items, options) => {
+  items = weatherdata;
+  var out = "<tr><th>Address</th><th>Summary</th><th>Temperature</th></tr>";
+
+  const length = items.length;
+  for(var i = 0; i<length; i++) {
+    out = out + options.fn(items[i]); //append string to existing string
+  }
+  return out;
+});
+
 server.get(`/`,(req,res) => {
   res.render('main.hbs');
 });
@@ -25,10 +39,20 @@ server.get(`/result`,(req,res) => {
 
 server.get(`/historical`, (req,res) => {
   filemgr.getAllData().then((result) => {
-    res.render('historical.hbs', result);
+    weatherdata = result;
+    res.render('historical.hbs');
   }).catch((errorMessage) => {
     console.log(errorMessage);
-  })
+  });
+});
+
+server.post(`/delete`, (req,res) => {
+  filemgr.deleteAll().then((result) => {
+    weatherdata = result;
+    res.render('historical.hbs');
+  }).catch((errorMessage) => {
+    console.log(errorMessage);
+  });
 });
 
 server.post(`/form`, (req,res) => {

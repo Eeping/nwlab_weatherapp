@@ -55,9 +55,35 @@ const getAllData = () => {
   });
 };
 
+//delete data
+const deleteAll = () => {
+  return new Promise((resolve, reject) => {
+    //connect to mongo server
+    MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true}, (err, client) => {
+      if (err) {
+        reject('unable to connect to MongoDB');
+      }
+
+      console.log('connected to MongoDB');
+      //function to create database
+      const db = client.db('WeatherApp');
+
+    //then() - promise
+    db.collection('weatherCollection').remove({}).then( (result) => {
+      resolve(result); //convert JSON to string - JSON.stringify(docs)
+    }, (err) => {
+        reject('Unable to delete');
+    });
+
+      client.close();
+    });
+  });
+};
+
 
 //export function
 module.exports = {
   saveData,
   getAllData,
+  deleteAll,
 }
