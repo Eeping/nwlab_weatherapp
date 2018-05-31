@@ -5,6 +5,8 @@ const axios = require('axios'); //web client, connect API with another server
 const bodyParser = require('body-parser');
 const filemgr = require('./filemgr'); //put./ because it is in current directory
 
+const port = process.env.PORT || 3000; //see environment variable call port, allow flexi port based on environment
+
 server.use(bodyParser.urlencoded({extended:true}));
 
 server.set('view engine','hbs'); //set server to use hbs as views engine
@@ -107,6 +109,6 @@ server.get(`/form`, (req, res) => {
 
 
 
-server.listen(3000, () => {
-  console.log("Server listening on port 3000");
+server.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 }); //specified port 3000
