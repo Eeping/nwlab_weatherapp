@@ -35,7 +35,7 @@ const saveData = (newdata) => {
 const getAllData = () => {
   return new Promise((resolve, reject) => {
     //connect to mongo server
-    MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true}, (err, client) => {
+    MongoClient.connect(database, {useNewUrlParser: true}, (err, client) => {
       if (err) {
         reject('unable to connect to MongoDB');
       }
@@ -60,7 +60,7 @@ const getAllData = () => {
 const deleteAll = () => {
   return new Promise((resolve, reject) => {
     //connect to mongo server
-    MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true}, (err, client) => {
+    MongoClient.connect(database, {useNewUrlParser: true}, (err, client) => {
       if (err) {
         reject('unable to connect to MongoDB');
       }
