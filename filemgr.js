@@ -1,7 +1,8 @@
 const {MongoClient} = require('mongodb'); //referencing {},
 const fs = MongoClient; //assign to fs
 
-const database = 'mongodb://localhost:27017';
+//const database = 'mongodb://localhost:27017'; //test locally
+const database = 'mongodb://lab123:lab123@ds051893.mlab.com:51893/weatherapp'; //in cloud
 
 const saveData = (newdata) => {
   //define function
